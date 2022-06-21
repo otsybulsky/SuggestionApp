@@ -64,7 +64,7 @@ public class MongoSuggestionData : ISuggestionData
         try
         {
             var db = client.GetDatabase(_db.DbName);
-            var suggestionsInTransaction = db.GetCollection<SuggestionModel>(_db.StatusCollectionName);
+            var suggestionsInTransaction = db.GetCollection<SuggestionModel>(_db.SuggestionCollectionName);
             var suggestion = (await suggestionsInTransaction.FindAsync(s => s.Id == suggestionId)).First();
 
             bool isUpvote = suggestion.UserVotes.Add(userId);
@@ -110,7 +110,7 @@ public class MongoSuggestionData : ISuggestionData
         try
         {
             var db = client.GetDatabase(_db.DbName);
-            var suggestionsInTransaction = db.GetCollection<SuggestionModel>(_db.StatusCollectionName);
+            var suggestionsInTransaction = db.GetCollection<SuggestionModel>(_db.SuggestionCollectionName);
             await suggestionsInTransaction.InsertOneAsync(suggestion);
 
             var usersInTransaction = db.GetCollection<UserModel>(_db.UserCollectionName);
